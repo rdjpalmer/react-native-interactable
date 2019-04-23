@@ -2,7 +2,6 @@ package com.wix.interactable;
 
 import android.support.annotation.Nullable;
 
-import com.facebook.infer.annotation.Assertions;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
@@ -49,8 +48,9 @@ public class InteractableViewManager extends ViewGroupManager<InteractableView> 
             InteractableView view,
             int commandType,
             @Nullable ReadableArray args) {
-        Assertions.assertNotNull(view);
-        Assertions.assertNotNull(args);
+        if (view == null || args == null) {
+            throw new AssertionError();
+        }
         switch (commandType) {
             case COMMAND_SET_VELOCITY: {
                 view.setVelocity(RNConvert.pointF(args.getMap(0)));
